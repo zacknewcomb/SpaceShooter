@@ -385,7 +385,6 @@ class Enemy extends Body {
 	* The height and width of the Body
 	* @type {Number}
 	*/
-	size = {width: 25, height: 25};
 
 	/**
 	 * Creates a new enemy with the default attributes.
@@ -413,27 +412,7 @@ class Enemy extends Body {
 	 * @param {CanvasRenderingContext2D} graphics The current graphics context.
 	 */
 	draw(graphics) {
-		/*
-		graphics.strokeStyle = '#0000FF';
-		graphics.beginPath();
-		graphics.moveTo(
-			this.position.x,
-			this.position.y - this.half_size.height
-		);
-		graphics.lineTo(
-			this.position.x + this.half_size.width,
-			this.position.y + this.half_size.height
-		);
-		graphics.lineTo(
-			this.position.x - this.half_size.width,
-			this.position.y + this.half_size.height
-		);
-		graphics.lineTo(
-			this.position.x,
-			this.position.y - this.half_size.height
-		);
-		graphics.stroke();
-		*/
+
 		//Get the canvas element by using the getElementById method.
 				var canvas = document.getElementById('game_canvas');
 
@@ -459,7 +438,7 @@ class Enemy extends Body {
 
 				var shift = asteroid_size/2
 
-				context.drawImage(imgObj, x+shift, y-shift, asteroid_size, asteroid_size);
+				context.drawImage(imgObj, x-(shift/2), y-shift, asteroid_size, asteroid_size);
 
 		// draw velocity lines
 		//super.draw(graphics);
@@ -507,7 +486,7 @@ class Bullet extends Body {
 	* The speed attribute of the bullet
 	* @type {Number}
 	*/
-	speed = 50;
+	speed = 75;
 	/**
 	* The input handler of the bullet
 	* @type {Number}
@@ -570,7 +549,7 @@ class Bullet extends Body {
 		this.position.x = Math.min(Math.max(0, this.position.x), config.canvas_size.width);
 		this.position.y = Math.min(Math.max(0, this.position.y), config.canvas_size.height);
 
-		if (this.position.y == 0) {
+		if (this.position.y <= 0) {
 			queued_entities_for_removal.push(this.id)
 		}
 	}
@@ -622,16 +601,16 @@ class CollisionHandler {
 			for (let j = 0; j < entities.length; j++) {
 				if ((entities[i] !== undefined) && (entities[j] !== undefined)&& (entities[i] !== entities[j])) {
 					if (entities[i] === player) {
-						var rect1 = {x: player.position.x, y: player.position.y, width: player.size.width, height: player.size.height}
-						var rect2 = {x: entities[j].position.x, y: entities[j].position.y, width: entities[j].size.width, height: entities[j].size.height}
+						var rect1 = {x: player.position.x, y: player.position.y, width: player.half_size.width, height: player.half_size.height}
+						var rect2 = {x: entities[j].position.x, y: entities[j].position.y, width: entities[j].half_size.width, height: entities[j].half_size.height}
 					}
 					else if (entities[j] === player) {
-						var rect1 = {x: player.position.x, y: player.position.y, width: player.size.width, height: player.size.height}
-						var rect2 = {x: entities[i].position.x, y: entities[i].position.y, width: entities[i].size.width, height: entities[i].size.height}
+						var rect1 = {x: player.position.x, y: player.position.y, width: player.half_size.width, height: player.half_size.height}
+						var rect2 = {x: entities[i].position.x, y: entities[i].position.y, width: entities[i].half_size.width, height: entities[i].half_size.height}
 					}
 					else {
-						var rect1 = {x: entities[j].position.x, y: entities[j].position.y, width: entities[j].size.width, height: entities[j].size.height}
-						var rect2 = {x: entities[i].position.x, y: entities[i].position.y, width: entities[i].size.width, height: entities[i].size.height}
+						var rect1 = {x: entities[j].position.x, y: entities[j].position.y, width: entities[j].half_size.width, height: entities[j].half_size.height}
+						var rect2 = {x: entities[i].position.x, y: entities[i].position.y, width: entities[i].half_size.width, height: entities[i].half_size.height}
 					}
 
 					if (rect1.x < rect2.x + rect2.width &&
@@ -640,6 +619,8 @@ class CollisionHandler {
 			   		rect1.y + rect1.height > rect2.y) {
 							if (entities[i] === player) {
 								queued_entities_for_removal.push(entities[j].id)
+								let health = document.getElementById("health")
+								health.value -= 50;
 								player.health -= 50
 							}
 							else if (entities[j] === player) {
