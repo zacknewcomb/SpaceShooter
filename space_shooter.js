@@ -286,8 +286,36 @@ class Player extends Body {
 		);
 		graphics.stroke();
 		*/
+		var ship_size = 25
 
-//Get the canvas element by using the getElementById method.
+		var shift = ship_size/2
+
+		graphics.strokeStyle = '#000000';
+		graphics.beginPath();
+		graphics.moveTo(
+			this.position.x- shift,
+			this.position.y -shift
+		);
+		graphics.lineTo(
+			this.position.x + shift,
+			this.position.y - shift
+		);
+		graphics.lineTo(
+			this.position.x + shift,
+			this.position.y + shift
+		);
+		graphics.lineTo(
+			this.position.x - shift,
+			this.position.y + shift
+		);
+		graphics.lineTo(
+			this.position.x - shift,
+			this.position.y - shift
+		);
+		graphics.stroke();
+
+/*
+//Get the canvas element by using the getElementById method
 		var canvas = document.getElementById('game_canvas');
 
 //Get a 2D drawing context for the canvas.
@@ -308,14 +336,10 @@ class Player extends Body {
 //the y coordinates
 		var y = this.position.y;
 
-		var ship_size = 25
 
-		var shift = ship_size/2
 
 		context.drawImage(imgObj, x-shift, y-shift, ship_size,ship_size);
-
-		// draw velocity lines
-		// super.draw(graphics);
+		*/
 	}
 
 	/**
@@ -324,15 +348,6 @@ class Player extends Body {
 	 * @param {Number} delta_time Time in seconds since last update call.
 	 */
 	update(delta_time) {
-		/*
-			implement player movement here!
-
-			I recommend you look at the development console's log to get a hint as to how you can use the
-			controllers state to implement movement.
-
-			You can also log the current state of the player's controller with the following code
-			console.log(this.controller);
-		 */
 
 		 this.velocity.x = this.speed * this.controller.move_x
 		 this.velocity.y = this.speed * this.controller.move_y
@@ -418,6 +433,34 @@ class Enemy extends Body {
 	 */
 	draw(graphics) {
 
+		var asteroid_size = 25
+
+		var shift = asteroid_size/2
+
+		graphics.strokeStyle = '#000000';
+		graphics.beginPath();
+		graphics.moveTo(
+			this.position.x- shift,
+			this.position.y -shift
+		);
+		graphics.lineTo(
+			this.position.x + shift,
+			this.position.y - shift
+		);
+		graphics.lineTo(
+			this.position.x + shift,
+			this.position.y + shift
+		);
+		graphics.lineTo(
+			this.position.x - shift,
+			this.position.y + shift
+		);
+		graphics.lineTo(
+			this.position.x - shift,
+			this.position.y - shift
+		);
+		graphics.stroke();
+
 		//Get the canvas element by using the getElementById method.
 				var canvas = document.getElementById('game_canvas');
 
@@ -439,14 +482,12 @@ class Enemy extends Body {
 		//the y coordinates
 				var y = this.position.y;
 
-				var asteroid_size = 25
 
-				var shift = asteroid_size/2
 
-				context.drawImage(imgObj, x-shift, y-shift, asteroid_size, asteroid_size);
+				context.drawImage(imgObj, x-10, y-shift, asteroid_size, asteroid_size);
 
 		// draw velocity lines
-		//super.draw(graphics);
+		super.draw(graphics);
 	}
 
 	/**
@@ -510,7 +551,7 @@ class Bullet extends Body {
 		// we always want our new bullets to be at this location
 		this.position = {
 			x: player.position.x,
-			y: player.position.y -5
+			y: player.position.y-5
 		};
 	}
 
