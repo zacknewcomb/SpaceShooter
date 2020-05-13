@@ -250,6 +250,11 @@ class Player extends Body {
 		* @type {Number}
 		*/
 		this.time_ct = 0
+		/**
+		* The height and width of the Body
+		* @type {Number}
+		*/
+		this.size = {width: 25, height: 25};
 	}
 
 
@@ -307,7 +312,7 @@ class Player extends Body {
 
 		var shift = ship_size/2
 
-		context.drawImage(imgObj, x-shift, y, ship_size,ship_size);
+		context.drawImage(imgObj, x-shift, y-shift, ship_size,ship_size);
 
 		// draw velocity lines
 		// super.draw(graphics);
@@ -382,11 +387,6 @@ class Enemy extends Body {
 	input_handler = null;
 
 	/**
-	* The height and width of the Body
-	* @type {Number}
-	*/
-
-	/**
 	 * Creates a new enemy with the default attributes.
 	 */
 	constructor() {
@@ -404,6 +404,11 @@ class Enemy extends Body {
 			x: config.canvas_size.width * Math.random(),
 			y: -config.canvas_size.height - 10
 		};
+		/**
+		* The height and width of the Body
+		* @type {Number}
+		*/
+		this.size = {width: 25, height: 25};
 	}
 
 	/**
@@ -438,7 +443,7 @@ class Enemy extends Body {
 
 				var shift = asteroid_size/2
 
-				context.drawImage(imgObj, x-(shift/2), y-shift, asteroid_size, asteroid_size);
+				context.drawImage(imgObj, x-shift, y-shift, asteroid_size, asteroid_size);
 
 		// draw velocity lines
 		//super.draw(graphics);
