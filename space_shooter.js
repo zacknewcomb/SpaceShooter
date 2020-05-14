@@ -250,11 +250,16 @@ class Player extends Body {
 		* @type {Number}
 		*/
 		this.time_ct = 0
+
+		this.dimension = 25
+
 		/**
 		* The height and width of the Body
 		* @type {Number}
 		*/
-		this.size = {width: 25, height: 25};
+		this.size = {width: this.dimension, height: this.dimension};
+
+		this.shift = this.dimension / 2
 	}
 
 
@@ -286,35 +291,31 @@ class Player extends Body {
 		);
 		graphics.stroke();
 		*/
-		var ship_size = 25
-
-		var shift = ship_size/2
-
 		graphics.strokeStyle = '#000000';
 		graphics.beginPath();
 		graphics.moveTo(
-			this.position.x- shift,
-			this.position.y -shift
+			this.position.x - this.shift,
+			this.position.y - this.shift
 		);
 		graphics.lineTo(
-			this.position.x + shift,
-			this.position.y - shift
+			this.position.x + this.shift,
+			this.position.y - this.shift
 		);
 		graphics.lineTo(
-			this.position.x + shift,
-			this.position.y + shift
+			this.position.x + this.shift,
+			this.position.y + this.shift
 		);
 		graphics.lineTo(
-			this.position.x - shift,
-			this.position.y + shift
+			this.position.x - this.shift,
+			this.position.y + this.shift
 		);
 		graphics.lineTo(
-			this.position.x - shift,
-			this.position.y - shift
+			this.position.x - this.shift,
+			this.position.y - this.shift
 		);
 		graphics.stroke();
 
-/*
+
 //Get the canvas element by using the getElementById method
 		var canvas = document.getElementById('game_canvas');
 
@@ -338,8 +339,8 @@ class Player extends Body {
 
 
 
-		context.drawImage(imgObj, x-shift, y-shift, ship_size,ship_size);
-		*/
+		context.drawImage(imgObj, x-this.shift, y-this.shift, this.dimension,this.dimension);
+
 	}
 
 	/**
@@ -419,11 +420,15 @@ class Enemy extends Body {
 			x: config.canvas_size.width * Math.random(),
 			y: -config.canvas_size.height - 10
 		};
+
+		this.dimension = 25
+
+		this.shift = this.dimension / 2
 		/**
 		* The height and width of the Body
 		* @type {Number}
 		*/
-		this.size = {width: 25, height: 25};
+		this.size = {width: this.dimension, height: this.dimension};
 	}
 
 	/**
@@ -433,31 +438,27 @@ class Enemy extends Body {
 	 */
 	draw(graphics) {
 
-		var asteroid_size = 25
-
-		var shift = asteroid_size/2
-
 		graphics.strokeStyle = '#000000';
 		graphics.beginPath();
 		graphics.moveTo(
-			this.position.x- shift,
-			this.position.y -shift
+			this.position.x - this.shift,
+			this.position.y - this.shift
 		);
 		graphics.lineTo(
-			this.position.x + shift,
-			this.position.y - shift
+			this.position.x + this.shift,
+			this.position.y - this.shift
 		);
 		graphics.lineTo(
-			this.position.x + shift,
-			this.position.y + shift
+			this.position.x + this.shift,
+			this.position.y + this.shift
 		);
 		graphics.lineTo(
-			this.position.x - shift,
-			this.position.y + shift
+			this.position.x - this.shift,
+			this.position.y + this.shift
 		);
 		graphics.lineTo(
-			this.position.x - shift,
-			this.position.y - shift
+			this.position.x - this.shift,
+			this.position.y - this.shift
 		);
 		graphics.stroke();
 
@@ -484,7 +485,7 @@ class Enemy extends Body {
 
 
 
-				context.drawImage(imgObj, x-10, y-shift, asteroid_size, asteroid_size);
+				context.drawImage(imgObj, x-this.shift, y-this.shift, this.dimension, this.dimension);
 
 		// draw velocity lines
 		super.draw(graphics);
