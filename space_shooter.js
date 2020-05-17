@@ -270,6 +270,9 @@ class Player extends Body {
 	 * @param {CanvasRenderingContext2D} graphics The current graphics context.
 	 */
 	 draw(graphics) {
+
+		// draw triangle around center of position
+
 		/*
 		graphics.strokeStyle = '#000000';
 		graphics.beginPath();
@@ -291,6 +294,10 @@ class Player extends Body {
 		);
 		graphics.stroke();
 		*/
+
+		// draw box encompassing figure
+
+		/*
 		graphics.strokeStyle = '#000000';
 		graphics.beginPath();
 		graphics.moveTo(
@@ -314,30 +321,29 @@ class Player extends Body {
 			this.position.y - this.shift
 		);
 		graphics.stroke();
+		*/
 
 
-//Get the canvas element by using the getElementById method
+		//Get the canvas element by using the getElementById method
 		var canvas = document.getElementById('game_canvas');
 
-//Get a 2D drawing context for the canvas.
+		//Get a 2D drawing context for the canvas.
 		var context = canvas.getContext('2d');
 
-//The path to the image that we want to add.
+		//The path to the image that we want to add.
 		var imgPath = 'galaga_ship.png';
 
-//Create a new Image object.
+		//Create a new Image object.
 		var imgObj = new Image();
 
-//Set the src of this Image object.
+		//Set the src of this Image object.
 		imgObj.src = imgPath;
 
-//the x coordinates
+		//the x coordinates
 		var x = this.position.x;
 
-//the y coordinates
+		//the y coordinates
 		var y = this.position.y;
-
-
 
 		context.drawImage(imgObj, x-this.shift, y-this.shift, this.dimension,this.dimension);
 
@@ -438,6 +444,10 @@ class Enemy extends Body {
 	 */
 	draw(graphics) {
 
+		// Box around image
+
+		/*
+
 		graphics.strokeStyle = '#000000';
 		graphics.beginPath();
 		graphics.moveTo(
@@ -462,33 +472,33 @@ class Enemy extends Body {
 		);
 		graphics.stroke();
 
+		*/
+
 		//Get the canvas element by using the getElementById method.
-				var canvas = document.getElementById('game_canvas');
+		var canvas = document.getElementById('game_canvas');
 
 		//Get a 2D drawing context for the canvas.
-				var context = canvas.getContext('2d');
+		var context = canvas.getContext('2d');
 
 		//The path to the image that we want to add.
-				var imgPath = 'asteroid.png';
+		var imgPath = 'asteroid.png';
 
 		//Create a new Image object.
-				var imgObj = new Image();
+		var imgObj = new Image();
 
 		//Set the src of this Image object.
-				imgObj.src = imgPath;
+		imgObj.src = imgPath;
 
 		//the x coordinates
-				var x = this.position.x;
+		var x = this.position.x;
 
 		//the y coordinates
-				var y = this.position.y;
+		var y = this.position.y;
 
-
-
-				context.drawImage(imgObj, x-this.shift, y-this.shift, this.dimension, this.dimension);
+		context.drawImage(imgObj, x-this.shift, y-this.shift, this.dimension, this.dimension);
 
 		// draw velocity lines
-		super.draw(graphics);
+		// super.draw(graphics);
 	}
 
 	/**
@@ -533,7 +543,7 @@ class Bullet extends Body {
 	* The speed attribute of the bullet
 	* @type {Number}
 	*/
-	speed = 75;
+	speed = 175;
 	/**
 	* The input handler of the bullet
 	* @type {Number}
@@ -552,7 +562,7 @@ class Bullet extends Body {
 		// we always want our new bullets to be at this location
 		this.position = {
 			x: player.position.x,
-			y: player.position.y-5
+			y: player.position.y-player.shift
 		};
 	}
 
@@ -660,10 +670,15 @@ class CollisionHandler {
 						var rect2 = {x: entities[i].position.x, y: entities[i].position.y, width: entities[i].half_size.width, height: entities[i].half_size.height}
 					}
 
-					if (rect1.x < rect2.x + rect2.width &&
+					if ((rect1.x < rect2.x + rect2.width &&
 			   		rect1.x + rect1.width > rect2.x &&
 			   		rect1.y < rect2.y + rect2.height &&
-			   		rect1.y + rect1.height > rect2.y) {
+			   		rect1.y + rect1.height > rect2.y) ||
+
+						(rect1.x > rect2.x - rect2.width &&
+				   		rect1.x - rect1.width < rect2.x &&
+				   		rect1.y > rect2.y - rect2.height &&
+				   		rect1.y - rect1.height < rect2.y)) {
 							if (entities[i] === player) {
 								queued_entities_for_removal.push(entities[j].id)
 								let health = document.getElementById("health")
