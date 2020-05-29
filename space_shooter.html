@@ -1,14 +1,20 @@
 <!DOCTYPE html>
 <html lang="en">
 	<head>
-		<title>CS316 - PA2</title>
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css" integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh" crossorigin="anonymous">
+		<title>Space Shooter</title>
 	</head>
 	<body>
 		<div id="game_wrapper">
-			<canvas id="game_canvas" style="border: 1px solid black;margin: 0 auto;display: block;"></canvas>
-			<progress id="health" style="background-color:red;" value="100" max="100"></progress>
+			<canvas id="game_canvas" style="border: 1px solid black; margin: 0 auto; display: block;"></canvas>
+      <div style="width: 300px; margin-left: auto; margin-right: auto; text-align: center">
+      <label for='health'> Health </label>
+      <div>
+      <div class="progress" style="width: 300px; margin-left: auto; margin-right: auto;">
+        <div id="progress-bar" class="progress-bar bg-danger" role="progressbar" aria-valuenow="0" aria-valuemin="0" aria-valuemax="100"></div>
+      </div>
 			<span id="game_state"></span>
 		</div>
-	</body>
+	 </body>
 	<script src="space_shooter.js"></script>
 </html>

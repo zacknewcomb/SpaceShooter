@@ -121,7 +121,6 @@ class Body {
 	* The health measure of the Body
 	* @type {Number}
 	*/
-	health = 100;
 
 	/**
 	 * Creates a new body with all of the default attributes
@@ -253,6 +252,8 @@ class Player extends Body {
 
 		this.dimension = 25
 
+		this.health = 100;
+
 		/**
 		* The height and width of the Body
 		* @type {Number}
@@ -347,6 +348,8 @@ class Player extends Body {
 
 		context.drawImage(imgObj, x-this.shift, y-this.shift, this.dimension,this.dimension);
 
+
+
 	}
 
 	/**
@@ -369,6 +372,10 @@ class Player extends Body {
 			 this.velocity.y = 0;
 		 }
 
+		 let healthString = this.health
+		 let bars = document.getElementsByClassName('progress-bar')
+ 		 bars[0].style.width = `${healthString}%`
+		 //console.log(`${healthString}`)
 
 		 this.time_ct += delta_time
 
@@ -681,9 +688,8 @@ class CollisionHandler {
 				   		rect1.y - rect1.height < rect2.y)) {
 							if (entities[i] === player) {
 								queued_entities_for_removal.push(entities[j].id)
-								let health = document.getElementById("health")
-								health.value -= 50;
-								player.health -= 50
+								player.health -= 25
+
 							}
 							else if (entities[j] === player) {
 								queued_entities_for_removal.push(entities[i].id)
@@ -824,6 +830,8 @@ function draw(graphics) {
 	graphics.font = "10px Arial";
 	graphics.textAlign = "left";
 
+
+
 	// draw background (this clears the screen for the next frame)
 	graphics.fillStyle = '#FFFFFF';
 	graphics.fillRect(0, 0, config.canvas_size.width, config.canvas_size.height);
@@ -887,6 +895,9 @@ function loop(curr_time) {
 	// convert time to seconds
 	curr_time /= 1000;
 
+	//let bars = document.getElementsByClassName('progress-bar')
+	//bars[0].style.width = '100%';
+
 	// edge case on first loop
 	if (last_time == null) {
 		last_time = curr_time;
@@ -901,9 +912,9 @@ function loop(curr_time) {
 
 		delta_time -= config.update_rate.seconds;
 		last_time = curr_time;
-		loop_count++;
+		//loop_count++;
 
-		game_state.innerHTML = `loop count ${loop_count}`;
+		//game_state.innerHTML = `loop count ${loop_count}`;
 	}
 
 	window.requestAnimationFrame(loop);
